@@ -47,7 +47,7 @@ void
 procinit(void)
 {
   struct proc *p;
-  
+    
   initlock(&pid_lock, "nextpid");
   initlock(&wait_lock, "wait_lock");
   for(p = proc; p < &proc[NPROC]; p++) {
@@ -119,6 +119,7 @@ allocproc(void)
 found:
   p->pid = allocpid();
   p->state = USED;
+  p->niceValue = 10;
 
   // Allocate a trapframe page.
   if((p->trapframe = (struct trapframe *)kalloc()) == 0){
@@ -245,6 +246,7 @@ userinit(void)
   p->state = RUNNABLE;
 
   release(&p->lock);
+
 }
 
 // Grow or shrink user memory by n bytes.

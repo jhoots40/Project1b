@@ -105,4 +105,7 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  int niceValue;               // nice value for scheduler
 };
+
+extern struct proc proc[NPROC];

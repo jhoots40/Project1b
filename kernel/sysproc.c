@@ -95,3 +95,33 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+//return the total number of processes in the system.
+uint64
+sys_pcount(void)
+{
+  uint count = 0;
+
+  for(int i = 0; i < NPROC; i++)
+  {
+    if(proc[i].state != UNUSED)
+    {
+      count = count + 1;
+    }
+  }
+  return count;
+}
+
+uint64
+sys_nice(void)
+{
+  int n;
+  if(argint(0, &n) < 0)
+    return -1;
+  if(n >= -20 && n <= 19)
+  {
+    myproc()->niceValue = n;
+    return 0;
+  }
+  return -1;
+}
